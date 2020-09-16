@@ -28,6 +28,8 @@ private slots:
     void handleStartTrackQuery();
     void handleOnLoad();
     void updateList(const QString &routeId);
+    void removeFromList(const QString &routeId);
     void handleSpawnPlane();
+    void handleClearAllDrawings();
 };
 #endif // MAINWINDOW_H

@@ -20,3 +20,8 @@ void jsobj::shapeAdded(const QString &str){
     qDebug() << "Got shape ID: " << str;
     emit jsobj::routeAdded(str);
 }
+
+void jsobj::shapeRemoved(const QString &str){
+   qDebug() << "Removed shape: " << str;
+   emit jsobj::routeRemoved(str);
+}
