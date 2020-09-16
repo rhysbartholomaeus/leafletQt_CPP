@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
 
     <!-- Leaflet -->
 
@@ -68,6 +68,12 @@
     <div id="map" style="width: 800px; height: 600px; border: 1px solid #ccc"></div>
 
     <script>
+
+        var qWebObj;
+        new QWebChannel(qt.webChannelTransport,
+                    function(channel){
+                        qWebObj = channel.objects.JsInterface;
+                    });
 
         var map = new L.Map('map', {center: new L.LatLng(-35.022638, 138.904095), zoom: 5});
 
@@ -152,12 +158,7 @@
             }
             drawnItems.addLayer(layer);
             console.log(layer._leaflet_id);
-            new QWebChannel(qt.webChannelTransport,
-            function(channel){
-                var webobj = channel.objects.JsInterface;
-                webobj.shapeAdded(layer._leaflet_id);
-                
-          });
+            qWebObj.shapeAdded(layer._leaflet_id);
         });
 
         // Object(s) edited - update popups
@@ -172,13 +173,17 @@
             });
         });
 
+        // Get the deleted event so we can update the GUI
+        map.on(L.Draw.Event.DELETED, function(event) {
+            var layers = event.layers
+            layers.eachLayer(function(layer){
+                qWebObj.shapeRemoved(layer._leaflet_id);
+            });
+        });
+
         // Setup the OpenSky track query feature
         var trackLayer = L.layerGroup().addTo(map);
         initiateTrackQuery(trackLayer);
-
-        // Run the test a moving marker thing.
-        //initAircraft("pointless");
-
     </script>
   </body>
 </html>
