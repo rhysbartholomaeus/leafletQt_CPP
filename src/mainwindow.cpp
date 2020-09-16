@@ -1,5 +1,5 @@
 #include "include/mainwindow.h"
-#include "include/ui_mainwindow.h"
+#include "ui_mainwindow.h"
 #include "include/jsobj.h"
 
 MainWindow::MainWindow(QWidget *parent)
@@ -14,7 +14,7 @@ MainWindow::MainWindow(QWidget *parent)
     jsobj *js = new jsobj();
     m_view->page()->setWebChannel(channel);
     channel->registerObject(QString("JsInterface"), js);
-    m_view->page()->setUrl(QUrl("file:///html/index.html"));
+    m_view->page()->load(QUrl("file:///./html/index.html"));
 
     connect(m_view, &QWebEngineView::loadFinished, this, &MainWindow::handleOnLoad);
     connect(ui->clearAllTracks, SIGNAL (released()), this, SLOT (handleClearAllTracks()));
