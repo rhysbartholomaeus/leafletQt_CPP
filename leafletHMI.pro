@@ -16,7 +16,7 @@ SOURCES += \
 HEADERS += \
     include/jsobj.h \
     include/mainwindow.h \
-    include/ui_mainwindow.h \
+    ui_mainwindow.h \
 
 FORMS += \
     mainwindow.ui
